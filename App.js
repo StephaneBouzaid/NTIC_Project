@@ -1,12 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Navigation from "./Navigation/Navigation";
+import { NavigationContainer} from "@react-navigation/native";
+import Tabs from "./Navigation/BottomTab";
 
 
 export default class App extends React.Component {
     render() {
         return (
-            <Navigation/>
+            <NavigationContainer>
+                <Tabs/>
+            </NavigationContainer>
         );
     }
 }

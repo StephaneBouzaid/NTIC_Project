@@ -1,32 +1,60 @@
 import React from 'react'
-import {StyleSheet, View, Text, TouchableOpacity, ImageBackground, FlatList} from 'react-native'
+import {StyleSheet, View, Text, TouchableOpacity, ImageBackground, FlatList, Image} from 'react-native'
 import {getImageFromDatabase} from "../API/API_Database";
 import Pictogramme from "./Pictogrammes";
+import SelectedPictos from "./SelectedPictos";
+
+let tab1=[{IDpictogramme: 0, Nom:"", url:"https://i.ibb.co/8xLp2bk/fond.png"}];
 
 class HomeScreen extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = { images: [] }
+        this.state = { images: [], test: "" }
     }
 
-    _loadImage() {
-        getImageFromDatabase().then(data => console.log(data));
+    async _loadImage(childData) {
+        const res = await getImageFromDatabase()
+        this.setState({images: res})
     }
 
+    callbackFunction = (childData) => {
+        this.setState({test: childData})
+    }
 
+    tabUpdate(tab) {
+        if (this.state.test){
+            tab.push(this.state.test)
+            for (let i=0; i<tab.length; i++) {
+                console.log(tab[i].Nom)
+            }
+        }
+
+        console.log(tab[0].Nom)
+
+    }
+
+    tabDeleteLastElement(tab) {
+        tab.pop();
+        return tab
+    }
 
     render() {
+        this.tabUpdate(tab1)
         return (
             <View style={styles.main_container}>
                 <View style={styles.top_container}>
                     <View style={styles.searchBar}>
-                        <Text style={styles.text}>Barre des pictos</Text>
+                        <FlatList
+                            numColumns={8}
+                            data={tab1}
+                            keyExtractor={(item) => item.IDpictogramme.toString()}
+                            renderItem={({item}) => <SelectedPictos image={item}/>}/>
                     </View>
                     <TouchableOpacity style={styles.readButton}>
                         <ImageBackground source={require('../Images/ReadIcone.png')} style={styles.image}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.deleteButton}>
+                    <TouchableOpacity style={styles.deleteButton} onPress={() => {this.tabDeleteLastElement(tab1)}}>
                         <ImageBackground source={require('../Images/DeleteIcone.png')} style={styles.image}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.favButton}>
@@ -51,10 +79,12 @@ class HomeScreen extends React.Component {
                             <Text style={styles.text}>Favoris</Text>
                         </View>
                     </View>
-                    <TouchableOpacity activeOpacity={0.7} style={styles.pictos_container} onPress={this._loadImage}>
+                    <TouchableOpacity activeOpacity={0.7} style={styles.pictos_container} onPress={() => {this._loadImage()}}>
                         <FlatList
-                            data = {this.state.images}
-                            renderItem={({item}) => <Pictogramme image={item} />}
+                            numColumns={9}
+                            data={this.state.images}
+                            keyExtractor={(item) => item.IDpictogramme.toString()}
+                            renderItem={({item}) => <Pictogramme parentCallback={this.callbackFunction} image={item}/>}
                         />
                     </TouchableOpacity>
                 </View>
@@ -68,6 +98,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         marginTop: 30,
+        backgroundColor: '#2a9d8F'
         //borderColor: '#FFFFFF',
         //borderWidth: 2
     },
@@ -85,21 +116,32 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: 15,
         marginRight: 15,
-        marginBottom: 15
+        marginBottom: 110
         //borderColor: '#FFFFFF',
         //borderWidth: 2
     },
     searchBar: {
         flex: 0.8,
-        flexDirection: 'column',
+        flexDirection: 'row',
         marginTop: 10,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         borderColor: '#FFFFFF',
         borderWidth: 2,
         borderRadius: 60,
     },
+    selectedPictos: {
+        flex : 0.07,
+        height: 70,
+        margin: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        borderRadius: 120,
+        borderWidth: 2,
+        borderColor: '#FFFFFF'
+    },
     readButton: {
-        flex: 0.08,
+        flex: 0.07,
         marginTop: 10,
         marginLeft: 10,
         justifyContent: 'center',
@@ -108,7 +150,7 @@ const styles = StyleSheet.create({
         elevation: 10
     },
     deleteButton: {
-        flex: 0.08,
+        flex: 0.07,
         marginTop: 10,
         marginLeft: 10,
         justifyContent: 'center',
@@ -117,7 +159,7 @@ const styles = StyleSheet.create({
         elevation: 10
     },
     favButton: {
-        flex: 0.08,
+        flex: 0.07,
         marginTop: 10,
         marginLeft: 10,
         justifyContent: 'center',
@@ -133,7 +175,7 @@ const styles = StyleSheet.create({
         opacity: 0.8,
     },
     favoritePictosContainer: {
-        flex: 0.12,
+        flex: 0.11,
         flexDirection: 'column',
         marginTop: 10,
         marginLeft: 5,
@@ -152,9 +194,9 @@ const styles = StyleSheet.create({
     },
     pictos_container: {
         flex: 1,
+        justifyContent: 'center',
         marginTop: 10,
         marginLeft: 15,
-        alignItems: 'center',
         borderColor: '#FFFFFF',
         borderWidth: 2,
         borderRadius: 30
@@ -170,6 +212,13 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
         fontSize: 20
+    },
+    test: {
+        resizeMode: 'contain',
+        width: '100%',
+        height: undefined,
+        aspectRatio: 1,
+        borderRadius: 200
     }
 })
 

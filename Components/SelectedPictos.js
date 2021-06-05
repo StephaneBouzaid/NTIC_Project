@@ -3,31 +3,26 @@ import {StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity} from "
 
 
 
-class Pictogramme extends React.Component {
-
-    _currentPicto () {
-        const selectedPicto = this.props.image
-        this.props.parentCallback(selectedPicto)
-        }
+class SelectedPictos extends React.Component {
 
     render() {
         const image = this.props.image
         return (
-            <TouchableOpacity style = {styles.main_container} onPress={() => {this._currentPicto()}}>
+            <View style = {styles.main_container}>
                 <Image source={{uri: image.url}} style={styles.images}/>
-            </TouchableOpacity>
+            </View>
         )
     }
 }
 const styles = StyleSheet.create({
     main_container : {
-        flex : 0.2,
-        margin : 10,
-        height: 150,
+        flex : 0.07,
+        margin : 2,
+        height: 73,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        borderRadius: 120
+        borderRadius: 90,
     },
     images : {
         resizeMode: 'contain',
@@ -38,4 +33,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Pictogramme
+export default SelectedPictos
