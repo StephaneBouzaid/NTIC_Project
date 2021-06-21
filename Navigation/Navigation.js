@@ -1,12 +1,14 @@
-import {createAppContainer, createStackNavigator, createBottomTabNavigator} from "react-navigation";
+import {createAppContainer} from "react-navigation";
+
 import { NavigationContainer } from '@react-navigation/native';
 import Registration_Form from "../Components/Registration_Form";
 import ConfirmationScreen from "../Components/ConfirmationScreen";
 import HomeScreen from "../Components/HomeScreen";
 import Favorites from "../Components/Favorites";
+import createStackNavigator from "react-native-screens/createNativeStackNavigator";
 
 const SearchStackNavigator = createStackNavigator({
-/*    RegistrationForm: {
+    RegistrationForm: {
         screen: Registration_Form,
         navigationOptions: {
             headerShown: false,
@@ -19,7 +21,7 @@ const SearchStackNavigator = createStackNavigator({
             headerShown: false,
             cardStyle: {backgroundColor: '#2a9d8F'},
         }
-    },*/
+    },
     HomeScreen: {
         screen: HomeScreen,
         navigationOptions: {
@@ -27,17 +29,6 @@ const SearchStackNavigator = createStackNavigator({
             cardStyle: {backgroundColor: '#2a9d8F'},
         },
     }
-})
-
-const TabNavigator = createBottomTabNavigator({
-    HomeScreen: {
-        screen : HomeScreen
-    },
-    Favorites: {
-        screen: Favorites
-    }
-
-
 })
 
 export default createAppContainer(SearchStackNavigator)

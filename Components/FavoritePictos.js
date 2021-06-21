@@ -3,19 +3,18 @@ import {StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity} from "
 
 
 
-class Pictogramme extends React.Component {
+class FavoritePictos extends React.Component {
 
-    // Fonction permettant de selectionner 1 pictogramme
-    _currentPicto () {
-        const selectedPicto = this.props.image
-        this.props.parentCallback(selectedPicto)
-        }
+    _currentPicto2 () {
+        const selectedFav = this.props.favori
+        this.props.parentCallback2(selectedFav)
+    }
 
     render() {
-        const image = this.props.image
+        const favori = this.props.favori
         return (
-            <TouchableOpacity style = {styles.main_container} onPress={() => {this._currentPicto()}}>
-                <Image source={{uri: image.url}} style={styles.images}/>
+            <TouchableOpacity style = {styles.main_container} onPress={() => {}}>
+                <Image source={{uri: favori.url}} style={styles.images}/>
             </TouchableOpacity>
         )
     }
@@ -23,8 +22,9 @@ class Pictogramme extends React.Component {
 const styles = StyleSheet.create({
     main_container : {
         flex : 0.2,
-        margin : 10,
-        height: 150,
+        margin : 5,
+        height: 110,
+        width: 90,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Pictogramme
+export default FavoritePictos

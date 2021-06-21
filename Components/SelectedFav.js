@@ -1,14 +1,13 @@
 import React from "react"
 import {StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity} from "react-native";
 
-class SelectedPictos extends React.Component {
+class SelectedFav extends React.Component {
 
-    // Affiche le pictogramme selectionné
     render() {
-        const image = this.props.image
+        const favori = this.props.favori
         return (
             <View style = {styles.main_container}>
-                <Image source={{uri: image.url}} style={styles.images}/>
+                <Image source={{uri: favori.url}} style={styles.images}/>
             </View>
         )
     }
@@ -32,4 +31,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default SelectedPictos
+export default SelectedFav

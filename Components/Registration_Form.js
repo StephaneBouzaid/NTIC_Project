@@ -3,9 +3,10 @@ import { View, TouchableOpacity, TextInput, Text, StyleSheet } from 'react-nativ
 
 class Registration_Form extends React.Component {
 
+    // Constructeur permettant de stocker les différentes données des pictogrammes en tant que props
     constructor(props) {
         super();
-        this.state={
+        this.state = {
             NomPatient:'',
             PrenomPatient:'',
             Age:'',
@@ -18,6 +19,7 @@ class Registration_Form extends React.Component {
         }
     }
 
+    // On récupère les données entrées par l'utilisateur et les envoies à la base de données
     submitForm() {
         const NomPatient = this.state.NomPatient;
         const PrenomPatient=this.state.PrenomPatient;
@@ -102,12 +104,11 @@ class Registration_Form extends React.Component {
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.submitButton} onPress={this.submitForm}>
+                    <TouchableOpacity style={styles.submitButton} onPress={() => {this.submitForm()}}>
                         <Text style={styles.textButton}> S'inscire </Text>
                     </TouchableOpacity>
                 </View>
             </View>
-
         )
     }
 }
